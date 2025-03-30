@@ -1,31 +1,58 @@
 //Escribir aqui los objetos
 object galvan {
     var sueldo = 15000
-    var montoCobrado = 0
+    var dinero = 0
+    var deuda = 0
 
     method sueldoActual() {
         return sueldo
     }
-    method montoCobrado(_sueldo) {
-        montoCobrado = _sueldo
+
+    method registrarCobro(_sueldo) {
+        dinero = dinero + _sueldo
+        if (deuda > dinero) {
+            deuda =  deuda - _sueldo
+            dinero = 0
+            }else{
+            dinero = dinero - deuda
+            deuda = 0
+        }
     }
+    
     method nuevoSueldo(_nuevoSueldo) {
         sueldo = _nuevoSueldo
     }
+
+    method dinero() {
+        return  dinero 
+    }
+
+    method gastar(_gasta) {
+        if (dinero > 0) {
+            deuda = deuda + (_gasta - dinero)
+            dinero = 0
+            }else{
+            deuda = deuda + _gasta
+
+        }
+    }
+
+    method deuda() {
+        return deuda
+    }
+    
 }
 
 object baigorria {
     var cantEmpanadasVendidas = 0
     const valorDeEmpanada = 15
-    var  montoCobrado = 0
     var totalCobrado = 0
     
     method sueldoActual() {
         return cantEmpanadasVendidas * valorDeEmpanada    
     }
 
-    method montoCobrado(_sueldoActual) {
-        montoCobrado = _sueldoActual
+    method registrarCobro(_sueldoActual) {
         totalCobrado = totalCobrado + _sueldoActual
         cantEmpanadasVendidas = 0 
     }
@@ -43,7 +70,7 @@ object gimenez {
     
     method pagarSueldo(empleado) {
         fondoActual = fondoActual - empleado.sueldoActual()
-        empleado.montoCobrado(empleado.sueldoActual())
+        empleado.registrarCobro(empleado.sueldoActual())
     }
 
     method fondoActual() {
